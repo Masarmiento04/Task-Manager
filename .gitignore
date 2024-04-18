@@ -1,0 +1,25 @@
+# Dependencias instaladas por npm
+/node_modules
+
+# Directorio de compilación
+/dist
+
+# Archivos de registro y salida
+/logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Archivos de configuración
+.env
+
+# Archivos de usuario
+*.sublime-project
+*.sublime-workspace
+.vscode/
+.idea/
+
+# Archivos temporales
+.DS_Store
+Thumbs.db
