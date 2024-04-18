@@ -1,11 +1,17 @@
-const express = require('express')
+const express = require ("express");
+const config = require ('../config/config.js')
+const router = require ('./routes/users.routes.js')
+const morgan = require ('morgan')
+
 const app = express();
-const port = 3000;
+app.use(morgan('dev'));
 
-app.get('/',(req,res) => {
-    res.send('Hello World!');
-});
+app.set('port', config.port);
 
-app.listen(port,() => {
-    console.log(`App listening on port ${port}`);
-});
+//middlewares
+app.use(express.json())
+app.use(express.urlencoded({extended: false}))
+
+app.use('/api/v1', router)
+
+module.exports = app;
