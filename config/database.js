@@ -10,6 +10,7 @@ const sequelize = new Sequelize(config.dbName, config.dbUser, config.dbPass, {
     }
 })
 
+//TEST DB CONNECTION
 /* async function testConnection() {
 
     try {
