@@ -1,7 +1,4 @@
-//import { Router } from "express";
-const express = require('express');
-const Router = express.Router;
-const sequelize = require('../../config/database')
+const Router = require('express');
 const { getAllUsers, getUserById, createUser, updateUser, deleteUser } = require('../controllers/user.controller');
 
 const router = Router();

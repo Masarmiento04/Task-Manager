@@ -1,8 +1,6 @@
-//const { cast, where } = require('sequelize');
 const User = require('../models/user.model');
 const bcrypt = require('bcrypt');
-const { faker } = require('@faker-js/faker');
-//const { sequelize } = require('../../config/database')
+const { faker, fa } = require('@faker-js/faker');
 
 // Obtener todos los usuarios
 exports.getAllUsers = async (req, res) => {
@@ -27,10 +25,14 @@ exports.createUser = async (req, res) => {
 
         const newUser = await User.create(
             {
-                username,
+                // username: faker.person.fullName,
+                // password: hashedPassword,
+                // email: faker.internet.email
+                username: username,
                 password: hashedPassword,
-                email
-            });
+                email: email
+            }
+        );
         res.status(201).json(newUser);
     } catch (error) {
         console.error('Error creating user:', error);
@@ -56,10 +58,14 @@ exports.getUserById = async (req, res) => {
 // Actualizar un usuario por su ID
 exports.updateUser = async (req, res) => {
     const userId = req.params.id;
-    //const { rUsername, rPassword, rEmail, rEstado } = req.body;
-    const { rPassword } = req.body;
-
+    const { username, password, email, estado } = req.body;
+    
     try {
+        const findUser = await User.findByPk(userId)
+        if (!findUser) {
+            return res.status(404).json({ message: 'User not foud' });
+        }
+
         const hashedPassword = await bcrypt.hash(rPassword, 10);
         const updatedRows = await User.update(
             {
@@ -75,10 +81,12 @@ exports.updateUser = async (req, res) => {
             }
         );
 
-        if (updatedRows === 0) {
-            return res.status(404).json({ message: 'User not foud' });
+        if (updatedRows[0] === 0) {
+            return res.status(404).json({ message: 'User not found' });
         }
+
         res.json({ message: 'User updated' })
+
     } catch (error) {
         console.error('Error updating user: ', error);
         res.status(500).json({ message: 'Internal Server Error' });

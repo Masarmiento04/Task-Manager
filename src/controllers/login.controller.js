@@ -3,10 +3,10 @@ const bcrypt = require('bcrypt');
 
 exports.getSesion = async (req, res) => {
     try {
-        // Tomar el nombre de usuario y la contraseña del cuerpo de la solicitud
+        // Tomar el correo y la contraseña del cuerpo de la solicitud
         const { lEmail, lPassword } = req.body;
 
-        // Buscar el usuario en la base de datos basado en el nombre de usuario proporcionado
+        // Buscar el usuario en la base de datos basado en el correo proporcionado
         const user = await User.findOne(
             {
                 where: {
@@ -14,7 +14,7 @@ exports.getSesion = async (req, res) => {
                 }
             }
         );
-        // Verificar si se encontró un usuario con el nombre de usuario proporcionado
+        // Verificar si se encontró un usuario con el correo proporcionado
         if (!user) {
             return res.status(401).json({ message: 'Invalid credentials' });
         }

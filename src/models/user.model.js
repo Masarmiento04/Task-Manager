@@ -1,6 +1,6 @@
 /* import { Sequelize, DataTypes } from "sequelize";
 import sequelize from ('../config/database') */
-const { Sequelize, DataTypes, Model } = require('sequelize');
+const { DataTypes, Model } = require('sequelize');
 const sequelize = require('../../config/database');
 
 class User extends Model { }

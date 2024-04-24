@@ -1,10 +1,10 @@
 const express = require('express');
-const Router = express.Router;
+const Router = require('express').Router;
 const sequelize = require('../../config/database');
-const {getSesion} = require('../controllers/login.controller')
+const { getSesion } = require('../controllers/login.controller')
 
-const router = Router();
+const routerL = Router();
 
-router.get('/login', getSesion);
+routerL.get('/login', getSesion);
 
-module.exports = router;
+module.exports = routerL;
