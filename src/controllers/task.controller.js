@@ -2,7 +2,7 @@ const Task = require('../models/task.model');
 const User = require('../models/user.model');
 const faker = require('@faker-js/faker');
 
-
+// Obtener todos las tareas
 exports.getTasks = async (req, res) => {
     try {
         const tasks = await Task.findAll();
@@ -13,6 +13,7 @@ exports.getTasks = async (req, res) => {
     }
 }
 
+// Crear una nueva tarea
 exports.getTaskById = async (req, res) => {
     try {
         const taskId = req.params.id;
@@ -28,13 +29,14 @@ exports.getTaskById = async (req, res) => {
     }
 }
 
+// Obtener una tarea por su ID
 exports.createTask = async (req, res) => {
     try {
         const { user_id, title, description } = req.body;
         if (!user_id || !title || !description) {
             return res.status(400).json({ message: 'All fields are required' });
         }
-        
+
         const newTask = await Task.create(
             {
                 user_id: user_id,
@@ -50,6 +52,7 @@ exports.createTask = async (req, res) => {
     }
 }
 
+// Actualizar una tarea por su ID
 exports.updateTask = async (req, res) => {
     try {
         const taskId = req.params.id;
@@ -68,9 +71,9 @@ exports.updateTask = async (req, res) => {
 
         const updatedRows = await Task.update(
             {
-                user_id: faker.number.int({ max: amount }),
-                title: faker.random.word,
-                description: faker.word.words({ min: 10, max: 20 })
+                user_id: user_id,
+                title: title,
+                description: description
             },
             {
                 where: {
@@ -91,6 +94,7 @@ exports.updateTask = async (req, res) => {
     }
 }
 
+// Eliminar una tarea por su ID
 exports.deleteTask = async (req, res) => {
     try {
         const taskId = req.params.id;

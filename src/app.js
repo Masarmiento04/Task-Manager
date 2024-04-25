@@ -17,5 +17,9 @@ app.use(express.json())
 app.use('/api/v1', userRouter)
 app.use('/api/v1', loginRouter)
 app.use('/api/v1', taskRouter)
+// Middleware de manejo de errores para rutas no encontradas
+app.use((req, res, next) => {
+    res.status(404).json({ message: 'La ruta solicitada no existe' });
+});
 
 module.exports = app;

@@ -25,9 +25,6 @@ exports.createUser = async (req, res) => {
 
         const newUser = await User.create(
             {
-                // username: faker.person.fullName,
-                // password: hashedPassword,
-                // email: faker.internet.email
                 username: username,
                 password: hashedPassword,
                 email: email
@@ -59,20 +56,20 @@ exports.getUserById = async (req, res) => {
 exports.updateUser = async (req, res) => {
     const userId = req.params.id;
     const { username, password, email, estado } = req.body;
-    
+
     try {
         const findUser = await User.findByPk(userId)
         if (!findUser) {
             return res.status(404).json({ message: 'User not foud' });
         }
 
-        const hashedPassword = await bcrypt.hash(rPassword, 10);
+        const hashedPassword = await bcrypt.hash(password, 10);
         const updatedRows = await User.update(
             {
-                username: faker.person.fullName(),
+                username: username,
                 password: hashedPassword,
-                email: faker.person.email(),
-                estado: true
+                email: email,
+                estado: estado
             },
             {
                 where: {
