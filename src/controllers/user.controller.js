@@ -1,6 +1,6 @@
 const User = require('../models/user.model');
 const bcrypt = require('bcrypt');
-const { faker, fa } = require('@faker-js/faker');
+const sanitizeHtml = require('sanitize-html');
 
 // Obtener todos los usuarios
 exports.getAllUsers = async (req, res) => {
@@ -22,12 +22,14 @@ exports.createUser = async (req, res) => {
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
+        const sanitizedUsername = sanitizeHtml(username);
+        const sanitizedEmail = sanitizeHtml(email);
 
         const newUser = await User.create(
             {
-                username: username,
+                username: sanitizedUsername,
                 password: hashedPassword,
-                email: email
+                email: sanitizedEmail
             }
         );
         res.status(201).json(newUser);
@@ -64,11 +66,14 @@ exports.updateUser = async (req, res) => {
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
+        const sanitizedUsername = sanitizeHtml(username);
+        const sanitizedEmail = sanitizeHtml(email);
+    
         const updatedRows = await User.update(
             {
-                username: username,
+                username: sanitizedUsername,
                 password: hashedPassword,
-                email: email,
+                email: sanitizedEmail,
                 estado: estado
             },
             {

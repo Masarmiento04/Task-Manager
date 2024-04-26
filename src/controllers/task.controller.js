@@ -1,6 +1,7 @@
+const sanitize = require('sanitize-html');
 const Task = require('../models/task.model');
 const User = require('../models/user.model');
-const faker = require('@faker-js/faker');
+const sanitizeHtml = require('sanitize-html');
 
 // Obtener todos las tareas
 exports.getTasks = async (req, res) => {
@@ -17,12 +18,14 @@ exports.getTasks = async (req, res) => {
 exports.getTaskById = async (req, res) => {
     try {
         const taskId = req.params.id;
-        console.log("Este es el parametro: " + taskId);
         const task = await Task.findByPk(taskId);
+
         if (!task) {
             return res.status(404).json({ message: 'Task not foud' });
         }
+
         res.json(task);
+
     } catch (error) {
         console.error('Error getting task by ID:', error);
         res.status(500).json({ message: 'Internal Server Error' });
@@ -37,11 +40,14 @@ exports.createTask = async (req, res) => {
             return res.status(400).json({ message: 'All fields are required' });
         }
 
+        const sanitizedTitle = sanitizeHtml(title)
+        const sanitizedDescription = sanitizeHtml(description)
+
         const newTask = await Task.create(
             {
                 user_id: user_id,
-                title: title,
-                description: description
+                title: sanitizedTitle,
+                description: sanitizedDescription
             }
         );
         res.status(201).json(newTask);
@@ -69,11 +75,14 @@ exports.updateTask = async (req, res) => {
 
         const amount = await User.count();
 
+        const sanitizedTitle = sanitizeHtml(title)
+        const sanitizedDescription = sanitizeHtml(description)
+
         const updatedRows = await Task.update(
             {
                 user_id: user_id,
-                title: title,
-                description: description
+                title: sanitizedTitle,
+                description: sanitizedDescription
             },
             {
                 where: {

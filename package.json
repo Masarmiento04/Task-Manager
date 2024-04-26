@@ -23,6 +23,7 @@
     "express": "^4.19.2",
     "morgan": "^1.10.0",
     "mysql2": "^3.9.6",
+    "sanitize-html": "^2.13.0",
     "sequelize": "^6.37.3"
   },
   "devDependencies": {
