@@ -1,6 +1,5 @@
 const User = require('../models/user.model');
 const bcrypt = require('bcrypt');
-const sanitize = require('sanitize-html');
 const sanitizeHtml = require('sanitize-html');
 
 exports.getSesion = async (req, res) => {
